@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Plant Buddy App</title>
+
+        <!-- Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Style -->
+         <link rel="stylesheet" href="style.css"/>
+    </head>
+
+    <body>
+        <div class="app" style="-webkit-app-region: drag;">     <!-- draggable-->
+            <div class="title-bar">
+                <h1 id="plants-name">Plant's name</h1>
+                <div class="title-bar-btns">
+                    <button class="title-bar-btn" id="minimize">
+                        <img
+                            id="minimize-btn"
+                            alt="Minimize"
+                            src="assets/title-bar-btns/minimize-btn.png"
+                        />
+                    </button>
+                    <button class="title-bar-btn" id="close">
+                        <img
+                            id="close-btn"
+                            alt="Close"
+                            src="assets/title-bar-btns/close-btn.png"
+                        />
+                    </button>
+                </div>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
