@@ -11,7 +11,7 @@ closeBtn.addEventListener("click", () => ipcRenderer.send("window:close"));
 
 // Water meter mechanic
 const drain_amount = 1;         // to drain per tick
-const drain_interval = 900;     // 0.5% per 1s
+const drain_interval = 900;     // 1% per 0.9s
 const water_cooldown = 10000    // 10s cooldown after watering
 
 // Default state
@@ -60,11 +60,19 @@ function updateUI() {
         care_reminder.textContent = "- Please give me water -";
         restart_btn.style.display = "none";
         water_btn.style.display = "flex";
-    } else {
+    } else {    // wilted
         plant_icon.src = "assets/philodendron-plant/philodendron-wilted.gif";
         mood_tag.textContent = "Wilted";
         care_reminder.textContent = "- Your plant has wilted -";
         restart_btn.style.display = "flex";
         water_btn.style.display = "none";
     }
+
+    // drain loop
+    setInterval(() => {
+        if (water_level > 0) {
+            water_level = Math.max(0, water_level - drain_amount);
+            updateUI();
+        }
+    }, drain_interval);
 }
