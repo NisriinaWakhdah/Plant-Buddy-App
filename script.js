@@ -11,7 +11,7 @@ closeBtn.addEventListener("click", () => ipcRenderer.send("window:close"));
 
 // Water meter mechanic
 const drain_amount = 1;         // to drain per tick
-const drain_interval = 900;     // 1% per 0.9s
+const drain_interval = 1000;     // 1% per 1s
 const water_cooldown = 10000    // 10s cooldown after watering
 
 // Default state
@@ -78,7 +78,7 @@ setInterval(() => {
     }
 }, drain_interval);
 
-// water button
+// Water button
 water_btn.addEventListener("click", () => {
     if (water_on_cooldown) return;
     water_level = Math.min(100, water_level + 25);  // Each refil = +25%
@@ -105,3 +105,16 @@ water_btn.addEventListener("click", () => {
         }
     }, 1000);
 });
+
+// Restart button
+restart_btn.addEventListener("click", () => {
+    water_level = 100;
+    water_on_cooldown = false;
+    water_btn.disabled = false;
+    water_btn.style.opacity = 1;
+    water_timer.textContent = "READY";
+    clearInterval(cooldown_timer);
+    updateUI();
+});
+
+updateUI();
