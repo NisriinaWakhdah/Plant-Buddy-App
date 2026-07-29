@@ -30,3 +30,14 @@ const care_reminder = document.getElementById("message");
 const water_btn = document.getElementById("water-btn");
 const water_timer = water_btn.querySelector(".timer");
 const restart_btn = document.getElementById("restart-btn");
+
+function updateUI() {
+    // update bars: each bar = 10%, each bar is filled if water_level > 10
+    percentage.textContent = `${water_level}%`;
+    bars.forEach((bar, i) => {
+        const threshold = i * 10;
+        const filled = water_level > threshold;
+        bar.style.background = filled ? "#8FC98A" : "#C2E0B8";
+        bar.style.color = filled ? "#8FC98A" : "#C2E0B8";
+    });
+}
