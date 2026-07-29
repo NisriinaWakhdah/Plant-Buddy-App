@@ -68,11 +68,40 @@ function updateUI() {
         water_btn.style.display = "none";
     }
 
-    // drain loop
-    setInterval(() => {
-        if (water_level > 0) {
-            water_level = Math.max(0, water_level - drain_amount);
-            updateUI();
-        }
-    }, drain_interval);
 }
+
+// drain loop
+setInterval(() => {
+    if (water_level > 0) {
+        water_level = Math.max(0, water_level - drain_amount);
+        updateUI();
+    }
+}, drain_interval);
+
+// water button
+water_btn.addEventListener("click", () => {
+    if (water_on_cooldown) return;
+    water_level = Math.min(100, water_level + 25);  // Each refil = +25%
+    updateUI();
+
+    // start cooldown
+    water_on_cooldown = true;
+    water_btn.disabled =true;
+    water_btn.style.opacity = 0.5;
+    let remaining = water_cooldown / 1000;
+    water_timer.textContent = `${remaining}s`;
+
+    // cooldown timer
+    cooldown_timer = setInterval(() => {
+        remaining -= 1;
+        if (remaining <= 0) {
+            clearInterval(cooldown_timer);
+            water_on_cooldown  = false;
+            water_btn.disabled = false;
+            water_btn.style.opacity = 1;
+            water_timer.textContent = "READY";
+        } else {
+            water_timer.textContent = `${remaining}s`;
+        }
+    }, 1000);
+});
