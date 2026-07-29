@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, ipcMain} = require('electron');
 require('electron-reload')(__dirname) // electron-reload
 
 function createWindow() {
@@ -18,6 +18,10 @@ function createWindow() {
     });
 
     win.loadFile('index.html');
+
+    /* Window controller with ipc handlers */
+    ipcMain.on('window:minimize', () => win.minimize());
+    ipcMain.on('window:close', () => win.close());
 };
 
 app.whenReady().then(createWindow);
