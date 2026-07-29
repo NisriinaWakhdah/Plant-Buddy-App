@@ -31,6 +31,17 @@ const water_btn = document.getElementById("water-btn");
 const water_timer = water_btn.querySelector(".timer");
 const restart_btn = document.getElementById("restart-btn");
 
+// Sounds effect
+const wateringSound = new Audio("assets/sounds/watering.mp3");
+const restartSound = new Audio("assets/sounds/restart.mp3");
+let watering_timeout;
+
+wateringSound.preload = "auto";
+restartSound.preload = "auto";
+
+wateringSound.volume = 1.0;
+restartSound.volume = 1.0;
+
 function updateUI() {
     // update bars: each bar = 10%, each bar is filled if water_level > 10
     percentage.textContent = `${water_level}%`;
@@ -78,9 +89,28 @@ setInterval(() => {
     }
 }, drain_interval);
 
+function playWateringSound() {
+    clearTimeout(watering_timeout);
+
+    wateringSound.pause();
+    wateringSound.currentTime = 0;
+
+    wateringSound.play().catch(console.error);
+
+    // stop after 3s
+    watering_timeout = setTimeout(() => {
+        wateringSound.pause();
+        wateringSound.currentTime = 0;
+    }, 3000);
+}
+
 // Water button
 water_btn.addEventListener("click", () => {
     if (water_on_cooldown) return;
+
+    // play watering sound
+    playWateringSound();
+
     water_level = Math.min(100, water_level + 25);  // Each refil = +25%
     updateUI();
 
@@ -108,6 +138,10 @@ water_btn.addEventListener("click", () => {
 
 // Restart button
 restart_btn.addEventListener("click", () => {
+    // play restart sound
+    restartSound.currentTime = 0;
+    restartSound.play().catch(console.error);
+
     water_level = 100;
     water_on_cooldown = false;
     water_btn.disabled = false;
