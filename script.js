@@ -40,4 +40,31 @@ function updateUI() {
         bar.style.background = filled ? "#8FC98A" : "#C2E0B8";
         bar.style.color = filled ? "#8FC98A" : "#C2E0B8";
     });
+
+    // update mood
+    if (water_level > 74) {     // thriving
+        plant_icon.src = "assets/philodendron-plant/philodendron-thriving.gif";
+        mood_tag.textContent = "Thriving";
+        care_reminder.textContent = "- All good here, just vibing -";
+        restart_btn.style.display = "none";
+        water_btn.style.display = "flex";
+    } else if (water_level > 39) {  // okay
+        plant_icon.src = "assets/philodendron-plant/philodendron-okay.gif";
+        mood_tag.textContent = "Okay";
+        care_reminder.textContent = "- No worries mate, chill! -";
+        restart_btn.style.display = "none";
+        water_btn.style.display = "flex";
+    } else if (water_level > 0) {   // thirsty
+        plant_icon.src = "assets/philodendron-plant/philodendron-thirsty.gif";
+        mood_tag.textContent = "Thristy";
+        care_reminder.textContent = "- Please give me water -";
+        restart_btn.style.display = "none";
+        water_btn.style.display = "flex";
+    } else {
+        plant_icon.src = "assets/philodendron-plant/philodendron-wilted.gif";
+        mood_tag.textContent = "Wilted";
+        care_reminder.textContent = "- Your plant has wilted -";
+        restart_btn.style.display = "flex";
+        water_btn.style.display = "none";
+    }
 }
